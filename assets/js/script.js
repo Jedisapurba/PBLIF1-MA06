@@ -113,6 +113,29 @@ function render() {
 }
 
 // ===== INISIALISASI =====
-isiDropdown();
-render();
-el("btnTampilkan").addEventListener("click", render);
+if (inputMulai && inputSelesai && selKendaraan && selJenis && el("btnTampilkan")) {
+  isiDropdown();
+  render();
+  el("btnTampilkan").addEventListener("click", render);
+}
+
+const grafikBiaya = el("grafikBiaya");
+if (grafikBiaya) {
+  const biayaBulanan = Array(12).fill(0);
+  dataServis.forEach((servis) => {
+    const bulan = new Date(`${servis.tanggal}T00:00:00`).getMonth();
+    biayaBulanan[bulan] += servis.biaya;
+  });
+  const biayaMaksimum = Math.max(...biayaBulanan, 1);
+
+  grafikBiaya.innerHTML = biayaBulanan.map((biaya, index) => `
+    <div class="chart-column">
+      <div class="chart-bar-area">
+        <div class="chart-bar" style="height:${(biaya / biayaMaksimum) * 100}%" title="${BULAN[index]}: ${rupiah(biaya)}"></div>
+      </div>
+      <span class="chart-month">${BULAN[index]}</span>
+    </div>`).join("");
+  el("grafikBiayaDeskripsi").textContent = BULAN
+    .map((bulan, index) => `${bulan}: ${rupiah(biayaBulanan[index])}`)
+    .join("; ");
+}
