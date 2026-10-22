@@ -1,0 +1,126 @@
+/* ==========================================================
+   Tema "Servis Kendaraan" untuk Bootstrap 5.3
+   Pasang SETELAH bootstrap.min.css:
+   <link href="bootstrap.min.css" rel="stylesheet">
+   <link href="servisku-theme.css" rel="stylesheet">
+   ========================================================== */
+
+:root {
+  /* --- Brand --- */
+  --sv-primary:        #1F5FBF;
+  --sv-primary-hover:  #184C99;
+  --sv-primary-active: #123B77;
+  --sv-primary-tint:   #E8F0FB;   /* latar baris terpilih, badge lembut */
+  --sv-sidebar:        #14233F;   /* sidebar navigasi */
+  --sv-sidebar-text:   #E6EAF0;
+  --sv-accent:         #C2410C;   /* aksen hangat (oli/mesin), pakai hemat */
+
+  /* --- Status --- */
+  --sv-success: #177A4B;
+  --sv-warning: #F2A900;          /* teks di atasnya WAJIB gelap */
+  --sv-danger:  #C62F3E;
+  --sv-info:    #0B7285;
+
+  /* --- Netral --- */
+  --sv-bg:      #F6F7F9;
+  --sv-surface: #FFFFFF;
+  --sv-border:  #DDE1E7;
+  --sv-text:    #1A1D21;
+  --sv-muted:   #5B6573;
+
+  /* --- Mapping ke variabel Bootstrap --- */
+  --bs-primary: var(--sv-primary);
+  --bs-primary-rgb: 31, 95, 191;
+  --bs-success: var(--sv-success);
+  --bs-success-rgb: 23, 122, 75;
+  --bs-warning: var(--sv-warning);
+  --bs-warning-rgb: 242, 169, 0;
+  --bs-danger: var(--sv-danger);
+  --bs-danger-rgb: 198, 47, 62;
+  --bs-info: var(--sv-info);
+  --bs-info-rgb: 11, 114, 133;
+
+  --bs-body-bg: var(--sv-bg);
+  --bs-body-color: var(--sv-text);
+  --bs-secondary-color: var(--sv-muted);
+  --bs-border-color: var(--sv-border);
+  --bs-link-color: var(--sv-primary);
+  --bs-link-hover-color: var(--sv-primary-hover);
+  --bs-link-color-rgb: 31, 95, 191;
+  --bs-link-hover-color-rgb: 24, 76, 153;
+  --bs-focus-ring-color: rgba(31, 95, 191, .35);
+}
+
+/* Tombol utama */
+.btn-primary {
+  --bs-btn-bg: var(--sv-primary);
+  --bs-btn-border-color: var(--sv-primary);
+  --bs-btn-hover-bg: var(--sv-primary-hover);
+  --bs-btn-hover-border-color: var(--sv-primary-hover);
+  --bs-btn-active-bg: var(--sv-primary-active);
+  --bs-btn-active-border-color: var(--sv-primary-active);
+  --bs-btn-disabled-bg: var(--sv-primary);
+  --bs-btn-disabled-border-color: var(--sv-primary);
+  --bs-btn-focus-shadow-rgb: 31, 95, 191;
+}
+.btn-outline-primary {
+  --bs-btn-color: var(--sv-primary);
+  --bs-btn-border-color: var(--sv-primary);
+  --bs-btn-hover-bg: var(--sv-primary);
+  --bs-btn-hover-border-color: var(--sv-primary);
+  --bs-btn-active-bg: var(--sv-primary-hover);
+  --bs-btn-active-border-color: var(--sv-primary-hover);
+  --bs-btn-disabled-color: var(--sv-primary);
+  --bs-btn-disabled-border-color: var(--sv-primary);
+}
+.btn-success {
+  --bs-btn-bg: var(--sv-success);
+  --bs-btn-border-color: var(--sv-success);
+  --bs-btn-hover-bg: #12633C;
+  --bs-btn-hover-border-color: #12633C;
+  --bs-btn-active-bg: #0E4F30;
+  --bs-btn-active-border-color: #0E4F30;
+}
+.btn-danger {
+  --bs-btn-bg: var(--sv-danger);
+  --bs-btn-border-color: var(--sv-danger);
+  --bs-btn-hover-bg: #A82533;
+  --bs-btn-hover-border-color: #A82533;
+  --bs-btn-active-bg: #8C1E2A;
+  --bs-btn-active-border-color: #8C1E2A;
+}
+/* Warning: teks gelap supaya kontras 8.4:1 (putih hanya 2:1, TIDAK lolos) */
+.btn-warning {
+  --bs-btn-color: var(--sv-text);
+  --bs-btn-bg: var(--sv-warning);
+  --bs-btn-border-color: var(--sv-warning);
+  --bs-btn-hover-color: var(--sv-text);
+  --bs-btn-hover-bg: #D99700;
+  --bs-btn-hover-border-color: #D99700;
+}
+.text-bg-warning { color: var(--sv-text) !important; }
+
+/* Form */
+.form-control:focus, .form-select:focus {
+  border-color: var(--sv-primary);
+  box-shadow: 0 0 0 .25rem rgba(31, 95, 191, .25);
+}
+.form-check-input:checked {
+  background-color: var(--sv-primary);
+  border-color: var(--sv-primary);
+}
+
+/* Kartu & tabel */
+.card { --bs-card-bg: var(--sv-surface); --bs-card-border-color: var(--sv-border); }
+.table { --bs-table-bg: var(--sv-surface); --bs-table-hover-bg: var(--sv-primary-tint); }
+.table thead th { color: var(--sv-muted); font-weight: 600; background: var(--sv-bg); }
+
+/* Sidebar */
+.sidebar { background: var(--sv-sidebar); color: var(--sv-sidebar-text); }
+.sidebar .nav-link { color: var(--sv-sidebar-text); border-radius: .5rem; }
+.sidebar .nav-link:hover { background: rgba(255, 255, 255, .08); }
+.sidebar .nav-link.active { background: var(--sv-primary); color: #fff; }
+
+/* Badge lembut untuk jenis servis */
+.badge-soft-primary { background: var(--sv-primary-tint); color: var(--sv-primary-hover); }
+.text-accent { color: var(--sv-accent) !important; }
