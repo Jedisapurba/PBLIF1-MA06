@@ -17,7 +17,7 @@
     .page-layout { min-height: calc(100vh - 64px); }
     .table-report td:first-child { white-space: nowrap; }
     @media (min-width: 992px) {
-      .sidebar { position: static; height: auto; flex: 0 0 var(--sidebar-w); }
+      .sidebar { position: sticky; top: 64px; height: calc(100vh - 64px); flex: 0 0 var(--sidebar-w); }
     }
     .sidebar .nav-heading { font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; color: #9FB0C8; padding: .75rem 1rem .25rem; }
     .sidebar .nav-link { padding: .6rem 1rem; min-height: 44px; display: flex; align-items: center; }
