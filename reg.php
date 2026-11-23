@@ -5,53 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Buat akun Aplikasi Pencatatan Servis Kendaraan Pribadi.">
   <title>Registrasi | Servis Kendaraan Pribadi</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/css/style.css" rel="stylesheet">
-  <style>
-    .register-page {
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 1.5rem 1rem;
-      background: var(--sv-bg);
-    }
-    .register-card {
-      width: min(100%, 420px);
-      padding: 1.75rem 1.875rem;
-      border: 1px solid var(--sv-border);
-      border-radius: .375rem;
-      background: var(--sv-surface);
-      box-shadow: 0 .125rem .5rem rgba(26, 29, 33, .04);
-    }
-    .register-brand {
-      padding-bottom: 1rem;
-      border-bottom: 1px solid var(--sv-border);
-      text-align: center;
-    }
-    .register-logo {
-      display: grid;
-      width: 56px;
-      height: 56px;
-      margin: 0 auto .75rem;
-      place-items: center;
-      border-radius: .75rem;
-      background: var(--sv-primary);
-      color: #fff;
-      font-size: 1.5rem;
-      font-weight: 700;
-    }
-    .register-heading { margin-top: 1.15rem; }
-    .register-submit { min-height: 40px; }
-    .register-footer {
-      margin-top: 1.25rem;
-      padding-top: 1.15rem;
-      border-top: 1px solid var(--sv-border);
-      text-align: center;
-    }
-    @media (max-width: 420px) {
-      .register-card { padding: 1.5rem; }
-    }
-  </style>
+  <link href="assets/css/reg.css" rel="stylesheet">
 </head>
 <body>
   <main class="register-page">
@@ -149,63 +104,6 @@
     </section>
   </main>
 
-  <script>
-    const form = document.getElementById('formRegistrasi');
-    const nameField = document.getElementById('namaLengkap');
-    const usernameField = document.getElementById('username');
-    const passwordField = document.getElementById('password');
-    const confirmationField = document.getElementById('konfirmasiPassword');
-    const termsField = document.getElementById('setuju');
-    const message = document.getElementById('registerMessage');
-
-    function setValidity(field, valid) {
-      field.classList.toggle('is-invalid', !valid);
-      field.setAttribute('aria-invalid', String(!valid));
-      return valid;
-    }
-
-    function validatePasswordConfirmation() {
-      const valid = confirmationField.value !== '' && confirmationField.value === passwordField.value;
-      return setValidity(confirmationField, valid);
-    }
-
-    [nameField, usernameField, passwordField].forEach(field => {
-      field.addEventListener('input', () => {
-        if (field.classList.contains('is-invalid')) {
-          setValidity(field, field.value.trim() !== '');
-        }
-        message.classList.add('d-none');
-      });
-    });
-
-    passwordField.addEventListener('input', () => {
-      if (confirmationField.value) validatePasswordConfirmation();
-    });
-    confirmationField.addEventListener('input', validatePasswordConfirmation);
-    termsField.addEventListener('change', () => setValidity(termsField, termsField.checked));
-
-    form.addEventListener('submit', event => {
-      event.preventDefault();
-      message.classList.add('d-none');
-
-      const validations = [
-        [nameField, nameField.value.trim() !== ''],
-        [usernameField, usernameField.value.trim() !== ''],
-        [passwordField, passwordField.value !== ''],
-        [confirmationField, confirmationField.value !== '' && confirmationField.value === passwordField.value],
-        [termsField, termsField.checked]
-      ];
-      validations.forEach(([field, valid]) => setValidity(field, valid));
-
-      const firstInvalid = validations.find(([, valid]) => !valid);
-      if (firstInvalid) {
-        firstInvalid[0].focus();
-        return;
-      }
-
-      message.className = 'alert alert-info mt-3';
-      message.textContent = 'Registrasi belum terhubung ke layanan akun. Silakan sambungkan formulir ini ke backend.';
-    });
-  </script>
+    <script src="assets/js/reg.js"></script>
 </body>
 </html>

@@ -4,73 +4,28 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dashboard | Servis Kendaraan Pribadi</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="../assets/css/style.css" rel="stylesheet">
-  <style>
-    :root { --sidebar-w: 240px; }
-    body { font-size: 1rem; }
-    .topbar { background: var(--sv-surface); border-bottom: 1px solid var(--sv-border); }
-    .sidebar { width: var(--sidebar-w); background-color: var(--sv-sidebar) !important; }
-    .sidebar .nav-link { color: var(--sv-sidebar-text); padding: .6rem 1rem; min-height: 44px; display: flex; align-items: center; }
-    .sidebar .nav-link.active { color: #fff; }
-    .sidebar .nav-link.sub { padding-left: 1.75rem; }
-    .sidebar .nav-heading { font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; color: #9FB0C8; padding: .75rem 1rem .25rem; }
-    .page-layout { min-height: calc(100vh - 64px); }
-    @media (min-width: 992px) {
-      .sidebar { position: sticky; top: 64px; height: calc(100vh - 64px); flex: 0 0 var(--sidebar-w); }
-    }
-    .page-content { max-width: 1400px; }
-    .brand-logo { width: 36px; height: 36px; border-radius: 8px; background: var(--sv-primary); color: #fff; display: grid; place-items: center; font-weight: 700; }
-    .skip-link { position: absolute; left: -999px; }
-    .skip-link:focus { left: 8px; top: 8px; z-index: 2000; background: #fff; padding: .5rem 1rem; }
-    .stat-card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--sv-border);
-      border-radius: .5rem;
-      min-height: 110px;
-      padding: 1rem 1.25rem;
-    }
-    .metric-value {
-      font-size: clamp(1.75rem, 2vw, 2.2rem);
-      font-weight: 700;
-      line-height: 1.2;
-      color: var(--sv-text);
-    }
-    .table-dashboard {
-      font-size: .9375rem;
-      min-width: 760px;
-    }
-    .table-dashboard th,
-    .table-dashboard td {
-      padding: .75rem .85rem;
-      vertical-align: middle;
-    }
-    .table-dashboard thead th {
-      background: #dfe1e4;
-      color: var(--sv-muted);
-      font-weight: 600;
-    }
-  </style>
+  <link href="../assets/css/dashboard.css" rel="stylesheet">
 </head>
 <body>
   <a class="skip-link" href="#konten">Lewati ke konten</a>
 
-  <header class="topbar sticky-top" style="height:64px">
+  <header class="topbar sticky-top">
     <div class="d-flex align-items-center gap-3 h-100 px-3">
-      <button class="btn btn-outline-secondary d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Buka menu">
+      <button class="btn btn-outline-secondary d-lg-none" type="button" data-ui-toggle="sidebar" data-ui-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Buka menu">
         <span aria-hidden="true">&#9776;</span>
       </button>
       <a class="d-flex align-items-center gap-2 text-decoration-none text-body fw-semibold" href="#">
         <span class="brand-logo" aria-hidden="true">S</span>
         <span class="d-none d-sm-inline">Servis Kendaraan Pribadi</span>
       </a>
-      <form class="flex-grow-1 d-none d-md-block mx-lg-4" role="search" style="max-width:600px" onsubmit="return false">
+      <form class="global-search flex-grow-1 d-none d-md-block mx-lg-4" role="search">
         <label for="cariGlobal" class="visually-hidden">Cari</label>
         <input id="cariGlobal" type="search" class="form-control" placeholder="Cari kendaraan, bengkel, jenis servis...">
       </form>
       <div class="dropdown ms-auto">
-        <button class="btn btn-light d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          <span class="rounded-circle bg-secondary-subtle d-inline-block" style="width:28px;height:28px" aria-hidden="true"></span>
+        <button class="btn btn-light d-flex align-items-center gap-2" type="button" data-ui-toggle="dropdown" aria-expanded="false">
+          <span class="avatar-dot rounded-circle bg-secondary-subtle" aria-hidden="true"></span>
           <span class="d-none d-sm-inline">Nama Pengguna</span>
         </button>
         <ul class="dropdown-menu dropdown-menu-end">
@@ -84,7 +39,7 @@
     <aside id="sidebar" class="sidebar offcanvas-lg offcanvas-start" tabindex="-1" aria-label="Menu utama">
       <div class="offcanvas-header d-lg-none">
         <span class="fw-semibold">Menu</span>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" data-bs-target="#sidebar" aria-label="Tutup"></button>
+        <button type="button" class="btn-close btn-close-white" data-ui-dismiss="sidebar" aria-label="Tutup"></button>
       </div>
       <nav class="offcanvas-body d-block p-2">
         <ul class="nav flex-column">
@@ -182,8 +137,7 @@
       </div>
     </main>
   </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="../assets/js/script.js"></script>
+  <script src="../assets/js/common-ui.js"></script>
+  <script src="../assets/js/dashboard.js"></script>
 </body>
 </html>
