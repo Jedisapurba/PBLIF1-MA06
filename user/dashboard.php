@@ -6,7 +6,7 @@
   <title>Dashboard | Servis Kendaraan Pribadi</title>
   <link href="../assets/css/style.css" rel="stylesheet">
   <link href="../assets/css/dashboard.css" rel="stylesheet">
-  <a href="../kendaraan.html">Kendaraan</a>
+  <a href="../kendaraan.php">Kendaraan</a>
 </head>
 <body>
   <a class="skip-link" href="#konten">Lewati ke konten</a>
