@@ -67,11 +67,11 @@
 
       <footer class="login-register">
         <span>Belum punya akun?</span>
-        <a href="reg.html" class="link-primary">Registrasi</a>
+        <a href="reg.php" class="link-primary">Registrasi</a>
       </footer>
     </section>
   </main>
-
     <script src="assets/js/login.js"></script>
+    <script src="assets/js/common-ui.js"></script>
 </body>
 </html>
