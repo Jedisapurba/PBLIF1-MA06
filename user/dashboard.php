@@ -6,7 +6,6 @@
   <title>Dashboard | Servis Kendaraan Pribadi</title>
   <link href="../assets/css/style.css" rel="stylesheet">
   <link href="../assets/css/dashboard.css" rel="stylesheet">
-  <a href="../kendaraan.php">Kendaraan</a>
 </head>
 <body>
   <a class="skip-link" href="#konten">Lewati ke konten</a>
@@ -44,15 +43,15 @@
       </div>
       <nav class="offcanvas-body d-block p-2">
         <ul class="nav flex-column">
-          <li><a class="nav-link active" href="dashboard.html" aria-current="page">Dashboard</a></li>
+          <li><a class="nav-link active" href="dashboard.php" aria-current="page">Dashboard</a></li>
           <li class="nav-heading">Data Master</li>
-          <li><a class="nav-link sub" href="kendaraan.html">Kendaraan</a></li>
-          <li><a class="nav-link sub" href="jenis_sevis.html">Jenis Servis</a></li>
+          <li><a class="nav-link sub" href="kendaraan.php">Kendaraan</a></li>
+          <li><a class="nav-link sub" href="jenis_sevis.php">Jenis Servis</a></li>
           <li class="nav-heading">Transaksi</li>
-          <li><a class="nav-link sub" href="servis.html">Riwayat Servis</a></li>
+          <li><a class="nav-link sub" href="servis.php">Riwayat Servis</a></li>
           <li class="nav-heading">Laporan</li>
-          <li><a class="nav-link sub" href="rekap.html">Rekap Biaya</a></li>
-          <li class="mt-3"><a class="nav-link" href="../login.html">Logout</a></li>
+          <li><a class="nav-link sub" href="rekap.php">Rekap Biaya</a></li>
+          <li class="mt-3"><a class="nav-link" href="../login.php">Logout</a></li>
         </ul>
       </nav>
     </aside>
@@ -62,7 +61,7 @@
         <h1 class="h2 fw-bold mb-1">Dashboard</h1>
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb small mb-4">
-            <li class="breadcrumb-item"><a href="dashboard.html">Beranda</a></li>
+            <li class="breadcrumb-item"><a href="dashboard.php">Beranda</a></li>
             <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
           </ol>
         </nav>
