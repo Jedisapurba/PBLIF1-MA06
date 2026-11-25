@@ -1,3 +1,8 @@
+<?php
+require_once __DIR__ . '/../db/auth.php';
+wajib_login();
+$penggunaAktif = pengguna_login();
+?>
 <!doctype html>
 <html lang="id">
 <head>
@@ -27,10 +32,10 @@
       <div class="dropdown ms-auto">
         <button class="btn btn-light d-flex align-items-center gap-2" data-ui-toggle="dropdown" aria-expanded="false">
           <span class="avatar-dot rounded-circle bg-secondary-subtle" aria-hidden="true"></span>
-          <span class="d-none d-sm-inline">Nama Pengguna</span>
+          <span class="d-none d-sm-inline"><?= htmlspecialchars($penggunaAktif['nama'], ENT_QUOTES, 'UTF-8') ?></span>
         </button>
         <ul class="dropdown-menu dropdown-menu-end">
-          <li><a class="dropdown-item" href="#">Logout</a></li>
+          <li><a class="dropdown-item" href="../logout.php">Logout</a></li>
         </ul>
       </div>
     </div>
@@ -45,15 +50,15 @@
       </div>
       <nav class="offcanvas-body d-block p-2">
         <ul class="nav flex-column">
-          <li><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+          <li><a class="nav-link" href="dashboard.php">Dashboard</a></li>
           <li class="nav-heading">Data Master</li>
-          <li><a class="nav-link sub" href="kendaraan.html">Kendaraan</a></li>
-          <li><a class="nav-link sub" href="jenis_sevis.html">Jenis Servis</a></li>
+          <li><a class="nav-link sub" href="kendaraan.php">Kendaraan</a></li>
+          <li><a class="nav-link sub" href="jenis_sevis.php">Jenis Servis</a></li>
           <li class="nav-heading">Transaksi</li>
-          <li><a class="nav-link sub" href="servis.html">Riwayat Servis</a></li>
+          <li><a class="nav-link sub" href="servis.php">Riwayat Servis</a></li>
           <li class="nav-heading">Laporan</li>
-          <li><a class="nav-link sub active" href="rekap.html" aria-current="page">Rekap Biaya</a></li>
-          <li class="mt-3"><a class="nav-link" href="../index.html">Logout</a></li>
+          <li><a class="nav-link sub active" href="rekap.php" aria-current="page">Rekap Biaya</a></li>
+          <li class="mt-3"><a class="nav-link" href="../logout.php">Logout</a></li>
         </ul>
       </nav>
     </aside>
@@ -64,7 +69,7 @@
         <h1 class="h2 fw-bold mb-1">Laporan Biaya Servis</h1>
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb small mb-4">
-            <li class="breadcrumb-item"><a href="dashboard.html">Beranda</a></li>
+            <li class="breadcrumb-item"><a href="dashboard.php">Beranda</a></li>
             <li class="breadcrumb-item active" aria-current="page">Laporan</li>
           </ol>
         </nav>

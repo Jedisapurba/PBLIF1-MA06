@@ -1,3 +1,8 @@
+<?php
+require_once __DIR__ . '/../db/auth.php';
+wajib_login();
+$penggunaAktif = pengguna_login();
+?>
 <!doctype html>
 <html lang="id">
 <head>
@@ -26,10 +31,10 @@
       <div class="dropdown ms-auto">
         <button class="btn btn-light d-flex align-items-center gap-2" type="button" data-ui-toggle="dropdown" aria-expanded="false">
           <span class="avatar-dot rounded-circle bg-secondary-subtle" aria-hidden="true"></span>
-          <span class="d-none d-sm-inline">Nama Pengguna</span>
+          <span class="d-none d-sm-inline"><?= htmlspecialchars($penggunaAktif['nama'], ENT_QUOTES, 'UTF-8') ?></span>
         </button>
         <ul class="dropdown-menu dropdown-menu-end">
-          <li><a class="dropdown-item" href="../login.html">Logout</a></li>
+          <li><a class="dropdown-item" href="../logout.php">Logout</a></li>
         </ul>
       </div>
     </div>
@@ -51,7 +56,7 @@
           <li><a class="nav-link sub" href="servis.php">Riwayat Servis</a></li>
           <li class="nav-heading">Laporan</li>
           <li><a class="nav-link sub" href="rekap.php">Rekap Biaya</a></li>
-          <li class="mt-3"><a class="nav-link" href="../login.php">Logout</a></li>
+          <li class="mt-3"><a class="nav-link" href="../logout.php">Logout</a></li>
         </ul>
       </nav>
     </aside>

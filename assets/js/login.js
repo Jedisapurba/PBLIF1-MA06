@@ -28,16 +28,12 @@ const form = document.getElementById('formLogin');
     });
 
     form.addEventListener('submit', event => {
-      event.preventDefault();
       message.classList.add('d-none');
 
       const usernameValid = validateField(username);
       const passwordValid = validateField(password);
       if (!usernameValid || !passwordValid) {
+        event.preventDefault();
         (usernameValid ? password : username).focus();
-        return;
       }
-
-      message.className = 'alert alert-info mt-3';
-      message.textContent = 'Autentikasi belum terhubung. Silakan sambungkan formulir ini ke layanan login.';
     });

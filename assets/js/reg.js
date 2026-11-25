@@ -33,7 +33,6 @@ const form = document.getElementById('formRegistrasi');
     termsField.addEventListener('change', () => setValidity(termsField, termsField.checked));
 
     form.addEventListener('submit', event => {
-      event.preventDefault();
       message.classList.add('d-none');
 
       const validations = [
@@ -47,10 +46,7 @@ const form = document.getElementById('formRegistrasi');
 
       const firstInvalid = validations.find(([, valid]) => !valid);
       if (firstInvalid) {
+        event.preventDefault();
         firstInvalid[0].focus();
-        return;
       }
-
-      message.className = 'alert alert-info mt-3';
-      message.textContent = 'Registrasi belum terhubung ke layanan akun. Silakan sambungkan formulir ini ke backend.';
     });
