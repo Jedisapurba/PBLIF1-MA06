@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <main class="login-page">
     <section class="login-card" aria-labelledby="judulLogin">
       <header class="login-brand">
-        <div class="login-logo" aria-hidden="true">S</div>
+        <img class="login-logo" src="assets/logo/ikon-servisku.png" alt="Logo Servisku">
         <p class="fw-bold mb-0">Aplikasi Pencatatan Servis<br>Kendaraan Pribadi</p>
       </header>
 

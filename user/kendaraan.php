@@ -2,64 +2,27 @@
 require_once __DIR__ . '/../db/auth.php';
 wajib_login();
 $penggunaAktif = pengguna_login();
+if (!isset($_SESSION['csrf_kendaraan'])) {
+    $_SESSION['csrf_kendaraan'] = bin2hex(random_bytes(32));
+}
 ?>
 <!doctype html>
 <html lang="id">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="<?= htmlspecialchars($_SESSION['csrf_kendaraan'], ENT_QUOTES, 'UTF-8') ?>">
   <title>Data Kendaraan | Servis Kendaraan Pribadi</title>
-  <link href="../assets/css/style.css" rel="stylesheet">
-  <link href="../assets/css/kendaraan.css" rel="stylesheet">
+  <link href="../assets/css/style.css?v=<?= filemtime(__DIR__ . '/../assets/css/style.css') ?>" rel="stylesheet">
+  <link href="../assets/css/kendaraan.css?v=<?= filemtime(__DIR__ . '/../assets/css/kendaraan.css') ?>" rel="stylesheet">
 </head>
 <body>
   <a class="skip-link" href="#konten">Lewati ke konten</a>
 
-  <header class="topbar sticky-top">
-    <div class="d-flex align-items-center gap-3 h-100 px-3">
-      <button class="btn btn-outline-secondary d-lg-none" type="button" data-ui-toggle="sidebar" data-ui-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Buka menu">
-        <span aria-hidden="true">&#9776;</span>
-      </button>
-      <a class="d-flex align-items-center gap-2 text-decoration-none text-body fw-semibold" href="dashboard.php">
-        <span class="brand-logo" aria-hidden="true">S</span>
-        <span class="d-none d-sm-inline">Servis Kendaraan Pribadi</span>
-      </a>
-      <form class="global-search flex-grow-1 d-none d-md-block mx-lg-4" role="search">
-        <label for="cariGlobal" class="visually-hidden">Cari</label>
-        <input id="cariGlobal" type="search" class="form-control" placeholder="Cari kendaraan, bengkel, jenis servis...">
-      </form>
-      <div class="dropdown ms-auto">
-        <button class="btn btn-light d-flex align-items-center gap-2" type="button" data-ui-toggle="dropdown" aria-expanded="false">
-          <span class="avatar-dot rounded-circle bg-secondary-subtle" aria-hidden="true"></span>
-          <span class="d-none d-sm-inline"><?= htmlspecialchars($penggunaAktif['nama'], ENT_QUOTES, 'UTF-8') ?></span>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-end">
-          <li><a class="dropdown-item" href="../logout.php">Logout</a></li>
-        </ul>
-      </div>
-    </div>
-  </header>
+  <?php require __DIR__ . '/topbar.php'; ?>
 
   <div class="page-layout d-lg-flex">
-    <aside id="sidebar" class="sidebar offcanvas-lg offcanvas-start" tabindex="-1" aria-label="Menu utama">
-      <div class="offcanvas-header d-lg-none">
-        <span class="fw-semibold">Menu</span>
-        <button type="button" class="btn-close btn-close-white" data-ui-dismiss="sidebar" aria-label="Tutup"></button>
-      </div>
-      <nav class="offcanvas-body d-block p-2">
-        <ul class="nav flex-column">
-          <li><a class="nav-link" href="dashboard.php">Dashboard</a></li>
-          <li class="nav-heading">Data Master</li>
-          <li><a class="nav-link sub active" href="kendaraan.php" aria-current="page">Kendaraan</a></li>
-          <li><a class="nav-link sub" href="jenis_sevis.php">Jenis Servis</a></li>
-          <li class="nav-heading">Transaksi</li>
-          <li><a class="nav-link sub" href="riwayat-servis.php">Riwayat Servis</a></li>
-          <li class="nav-heading">Laporan</li>
-          <li><a class="nav-link sub" href="rekap.php">Rekap Biaya</a></li>
-          <li class="mt-3"><a class="nav-link" href="../logout.php">Logout</a></li>
-        </ul>
-      </nav>
-    </aside>
+    <?php $menuAktif = 'kendaraan'; require __DIR__ . '/sidebar.php'; ?>
 
     <main id="konten" class="flex-grow-1 p-3 p-md-4">
       <div class="page-content">
@@ -140,23 +103,23 @@ $penggunaAktif = pengguna_login();
             <input type="hidden" id="kendaraanId">
             <div class="mb-3">
               <label for="namaKendaraan" class="form-label">Nama Kendaraan</label>
-              <input type="text" class="form-control" id="namaKendaraan" maxlength="80" required>
+              <input type="text" class="form-control" id="namaKendaraan" placeholder="Contoh: Honda Beat" maxlength="50" required>
             </div>
             <div class="mb-3">
               <label for="jenisKendaraan" class="form-label">Jenis Kendaraan</label>
               <select class="form-select" id="jenisKendaraan" required>
-                <option value="">Pilih jenis</option>
+                <option value="">Pilih jenis kendaraan</option>
                 <option value="Motor">Motor</option>
                 <option value="Mobil">Mobil</option>
               </select>
             </div>
             <div class="mb-3">
               <label for="nomorPolisi" class="form-label">No. Polisi</label>
-              <input type="text" class="form-control text-uppercase" id="nomorPolisi" maxlength="12" required>
+              <input type="text" class="form-control text-uppercase" id="nomorPolisi" placeholder="Contoh: B 1234 XYZ" maxlength="15" required>
             </div>
             <div>
               <label for="tahunKendaraan" class="form-label">Tahun</label>
-              <input type="number" class="form-control" id="tahunKendaraan" min="1900" required>
+              <input type="number" class="form-control" id="tahunKendaraan" placeholder="Contoh: 2022" min="1901" max="2050" required>
             </div>
           </div>
           <div class="modal-footer">
@@ -215,6 +178,6 @@ $penggunaAktif = pengguna_login();
     </div>
   </div>
     <script src="../assets/js/common-ui.js"></script>
-  <script src="../assets/js/kendaraan.js"></script>
+  <script src="../assets/js/kendaraan.js?v=<?= filemtime(__DIR__ . '/../assets/js/kendaraan.js') ?>"></script>
 </body>
 </html>

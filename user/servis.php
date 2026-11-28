@@ -2,74 +2,39 @@
 require_once __DIR__ . '/../db/auth.php';
 wajib_login();
 $penggunaAktif = pengguna_login();
+if (!isset($_SESSION['csrf_servis'])) {
+    $_SESSION['csrf_servis'] = bin2hex(random_bytes(32));
+}
 ?>
 <!doctype html>
 <html lang="id">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Riwayat Servis | Servis Kendaraan Pribadi</title>
-  <link href="../assets/css/style.css" rel="stylesheet">
-  <link href="../assets/css/servis.css" rel="stylesheet">
+  <meta name="csrf-token" content="<?= htmlspecialchars($_SESSION['csrf_servis'], ENT_QUOTES, 'UTF-8') ?>">
+  <title>Servis Kendaraan | Servis Kendaraan Pribadi</title>
+  <link href="../assets/css/style.css?v=<?= filemtime(__DIR__ . '/../assets/css/style.css') ?>" rel="stylesheet">
+  <link href="../assets/css/servis.css?v=<?= filemtime(__DIR__ . '/../assets/css/servis.css') ?>" rel="stylesheet">
 </head>
 <body>
   <a class="skip-link" href="#konten">Lewati ke konten</a>
 
-  <!-- TOPBAR -->
-  <header class="topbar sticky-top">
-    <div class="d-flex align-items-center gap-3 h-100 px-3">
-      <button class="btn btn-outline-secondary d-lg-none" type="button" data-ui-toggle="sidebar" data-ui-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Buka menu"><span aria-hidden="true">&#9776;</span></button>
-      <a class="d-flex align-items-center gap-2 text-decoration-none text-body fw-semibold" href="#">
-        <span class="brand-logo" aria-hidden="true">S</span>
-        <span class="d-none d-sm-inline">Servis Kendaraan Pribadi</span>
-      </a>
-      <form class="global-search flex-grow-1 d-none d-md-block mx-lg-4" role="search">
-        <label for="cariGlobal" class="visually-hidden">Cari</label>
-        <input id="cariGlobal" type="search" class="form-control" placeholder="Cari kendaraan, bengkel, jenis servis...">
-      </form>
-      <div class="dropdown ms-auto">
-        <button class="btn btn-light d-flex align-items-center gap-2" data-ui-toggle="dropdown" aria-expanded="false">
-          <span class="avatar-dot rounded-circle bg-secondary-subtle" aria-hidden="true"></span>
-          <span class="d-none d-sm-inline"><?= htmlspecialchars($penggunaAktif['nama'], ENT_QUOTES, 'UTF-8') ?></span>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-end"><li><a class="dropdown-item" href="../logout.php">Logout</a></li></ul>
-      </div>
-    </div>
-  </header>
+  <?php require __DIR__ . '/topbar.php'; ?>
 
   <div class="page-layout d-lg-flex">
-    <!-- SIDEBAR -->
-    <aside id="sidebar" class="sidebar offcanvas-lg offcanvas-start" tabindex="-1" aria-label="Menu utama">
-      <div class="offcanvas-header d-lg-none">
-        <span class="fw-semibold">Menu</span>
-        <button type="button" class="btn-close btn-close-white" data-ui-dismiss="sidebar" aria-label="Tutup"></button>
-      </div>
-      <nav class="offcanvas-body d-block p-2">
-        <ul class="nav flex-column">
-          <li><a class="nav-link" href="dashboard.php">Dashboard</a></li>
-          <li class="nav-heading">Data Master</li>
-          <li><a class="nav-link sub" href="kendaraan.php">Kendaraan</a></li>
-          <li><a class="nav-link sub" href="jenis_sevis.php">Jenis Servis</a></li>
-          <li class="nav-heading">Transaksi</li>
-          <li><a class="nav-link sub active" href="servis.php" aria-current="page">Riwayat Servis</a></li>
-          <li class="nav-heading">Laporan</li>
-          <li><a class="nav-link sub" href="rekap.php">Rekap Biaya</a></li>
-          <li class="mt-3"><a class="nav-link" href="../logout.php">Logout</a></li>
-        </ul>
-      </nav>
-    </aside>
+    <?php $menuAktif = 'servis'; require __DIR__ . '/sidebar.php'; ?>
 
     <!-- KONTEN -->
     <main id="konten" class="page-main flex-grow-1 p-3 p-md-4">
       <div class="page-content">
         <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
           <div>
-            <h1 class="h2 fw-bold mb-1">Riwayat Servis</h1>
+            <h1 class="h2 fw-bold mb-1">Servis Kendaraan</h1>
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb small mb-0">
                 <li class="breadcrumb-item"><a href="dashboard.php">Beranda</a></li>
                 <li class="breadcrumb-item">Transaksi</li>
-                <li class="breadcrumb-item active" aria-current="page">Riwayat Servis</li>
+                <li class="breadcrumb-item active" aria-current="page">Servis Kendaraan</li>
               </ol>
             </nav>
           </div>
@@ -79,15 +44,15 @@ $penggunaAktif = pengguna_login();
         <!-- FILTER -->
         <section class="card mb-4" aria-labelledby="judulFilter">
           <div class="card-body">
-            <h2 id="judulFilter" class="h6 fw-bold mb-3">Filter Riwayat</h2>
+            <h2 id="judulFilter" class="h6 fw-bold mb-3">Filter Servis Kendaraan</h2>
             <form id="formFilter" novalidate class="row g-3 align-items-end">
               <div class="col-12 col-sm-6 col-xl">
                 <label for="fKendaraan" class="form-label fw-semibold">Kendaraan</label>
-                <select id="fKendaraan" class="form-select"><option value="">Semua</option></select>
+                <select id="fKendaraan" class="form-select"><option value="">Semua kendaraan</option></select>
               </div>
               <div class="col-12 col-sm-6 col-xl">
                 <label for="fJenis" class="form-label fw-semibold">Jenis Servis</label>
-                <select id="fJenis" class="form-select"><option value="">Semua</option></select>
+                <select id="fJenis" class="form-select"><option value="">Semua jenis servis</option></select>
               </div>
               <div class="col-12 col-sm-6 col-xl">
                 <label for="fBengkel" class="form-label fw-semibold">Bengkel</label>
@@ -113,7 +78,7 @@ $penggunaAktif = pengguna_login();
         <!-- DAFTAR -->
         <section class="card" aria-labelledby="judulDaftar">
           <div class="card-body">
-            <h2 id="judulDaftar" class="h6 fw-bold mb-3">Daftar Riwayat Servis</h2>
+            <h2 id="judulDaftar" class="h6 fw-bold mb-3">Daftar Servis Kendaraan</h2>
             <div class="table-responsive">
               <table class="table table-data table-hover mb-0">
                 <thead><tr>
@@ -135,7 +100,7 @@ $penggunaAktif = pengguna_login();
   <div class="modal fade" id="modalDetail" tabindex="-1" aria-labelledby="judulDetail" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg"><div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title h5 fw-bold" id="judulDetail">Detail Riwayat Servis</h2>
+        <h2 class="modal-title h5 fw-bold" id="judulDetail">Detail Servis Kendaraan</h2>
         <button type="button" class="btn-close" data-ui-dismiss="modal" aria-label="Tutup"></button>
       </div>
       <div class="modal-body">
@@ -153,7 +118,7 @@ $penggunaAktif = pengguna_login();
     <div class="modal-dialog modal-dialog-centered modal-lg"><div class="modal-content">
       <form id="formServis" novalidate>
         <div class="modal-header">
-          <h2 class="modal-title h5 fw-bold" id="judulForm">Tambah Riwayat Servis</h2>
+          <h2 class="modal-title h5 fw-bold" id="judulForm">Tambah Servis Kendaraan</h2>
           <button type="button" class="btn-close" data-ui-dismiss="modal" aria-label="Tutup"></button>
         </div>
         <div class="modal-body">
@@ -161,7 +126,7 @@ $penggunaAktif = pengguna_login();
           <div class="row g-3">
             <div class="col-12 col-md-6">
               <label for="iTanggal" class="form-label fw-semibold">Tanggal <span class="text-danger">*</span></label>
-              <input type="date" id="iTanggal" class="form-control" required>
+              <input type="date" id="iTanggal" class="form-control" title="Pilih tanggal servis" required>
               <div class="invalid-feedback" id="eTanggal"></div>
             </div>
             <div class="col-12 col-md-6">
@@ -180,12 +145,12 @@ $penggunaAktif = pengguna_login();
             </div>
             <div class="col-12 col-md-6">
               <label for="iKm" class="form-label fw-semibold">Kilometer <span class="text-danger">*</span></label>
-              <input type="number" id="iKm" class="form-control" placeholder="Masukkan kilometer" inputmode="numeric" step="1" required>
+              <input type="number" id="iKm" class="form-control" placeholder="Contoh: 15200" inputmode="numeric" min="0" max="2147483647" step="1" required>
               <div class="invalid-feedback" id="eKm"></div>
             </div>
             <div class="col-12 col-md-6">
               <label for="iBiaya" class="form-label fw-semibold">Biaya (Rp) <span class="text-danger">*</span></label>
-              <input type="number" id="iBiaya" class="form-control" placeholder="Masukkan biaya" inputmode="numeric" step="1" required>
+              <input type="number" id="iBiaya" class="form-control" placeholder="Contoh: 65000" inputmode="numeric" min="0" max="9999999999" step="1" required>
               <div class="invalid-feedback" id="eBiaya"></div>
             </div>
             <div class="col-12">
@@ -206,12 +171,12 @@ $penggunaAktif = pengguna_login();
   <div class="modal fade" id="modalHapus" tabindex="-1" aria-labelledby="judulHapus" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered"><div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title h5 fw-bold" id="judulHapus">Hapus Riwayat Servis</h2>
+        <h2 class="modal-title h5 fw-bold" id="judulHapus">Hapus Servis Kendaraan</h2>
         <button type="button" class="btn-close" data-ui-dismiss="modal" aria-label="Tutup"></button>
       </div>
       <div class="modal-body">
-        <p>Anda yakin ingin menghapus riwayat servis berikut?</p>
-        <div class="small text-body-secondary mb-1">Riwayat servis yang akan dihapus</div>
+        <p>Anda yakin ingin menghapus data servis kendaraan berikut?</p>
+        <div class="small text-body-secondary mb-1">Data servis kendaraan yang akan dihapus</div>
         <div class="detail-field mb-3" id="hapusRingkas"></div>
         <p class="text-danger small mb-0">Tindakan ini tidak dapat dibatalkan.</p>
       </div>
@@ -232,6 +197,6 @@ $penggunaAktif = pengguna_login();
     </div>
   </div>
     <script src="../assets/js/common-ui.js"></script>
-  <script src="../assets/js/servis.js"></script>
+  <script src="../assets/js/servis.js?v=<?= filemtime(__DIR__ . '/../assets/js/servis.js') ?>"></script>
 </body>
 </html>

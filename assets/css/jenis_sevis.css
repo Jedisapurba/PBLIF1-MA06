@@ -1,17 +1,7 @@
 :root { --sidebar-w: 240px; }
     body { font-size: 1rem; }
-    .topbar { background: var(--sv-surface); border-bottom: 1px solid var(--sv-border); }
-    .sidebar { width: var(--sidebar-w); background-color: var(--sv-sidebar); }
-    .sidebar .nav-link { color: var(--sv-sidebar-text); padding: .6rem 1rem; min-height: 44px; display: flex; align-items: center; }
-    .sidebar .nav-link.active { color: #fff; }
-    .sidebar .nav-link.sub { padding-left: 1.75rem; }
-    .sidebar .nav-heading { font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; color: #9FB0C8; padding: .75rem 1rem .25rem; }
     .page-layout { min-height: calc(100vh - 64px); }
-    @media (min-width: 992px) {
-      .sidebar { position: sticky; top: 64px; height: calc(100vh - 64px); flex: 0 0 var(--sidebar-w); }
-    }
     .page-content { max-width: 1400px; }
-    .brand-logo { width: 36px; height: 36px; border-radius: 8px; background: var(--sv-primary); color: #fff; display: grid; place-items: center; font-weight: 700; }
     .skip-link { position: absolute; left: -999px; }
     .skip-link:focus { left: 8px; top: 8px; z-index: 2000; background: #fff; padding: .5rem 1rem; }
     .toast-container { z-index: 2000; }

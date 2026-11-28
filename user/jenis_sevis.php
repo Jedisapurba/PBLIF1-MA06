@@ -2,64 +2,27 @@
 require_once __DIR__ . '/../db/auth.php';
 wajib_login();
 $penggunaAktif = pengguna_login();
+if (!isset($_SESSION['csrf_jenis_servis'])) {
+    $_SESSION['csrf_jenis_servis'] = bin2hex(random_bytes(32));
+}
 ?>
 <!doctype html>
 <html lang="id">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="<?= htmlspecialchars($_SESSION['csrf_jenis_servis'], ENT_QUOTES, 'UTF-8') ?>">
   <title>Jenis Servis | Servis Kendaraan Pribadi</title>
-  <link href="../assets/css/style.css" rel="stylesheet">
-  <link href="../assets/css/jenis_sevis.css" rel="stylesheet">
+  <link href="../assets/css/style.css?v=<?= filemtime(__DIR__ . '/../assets/css/style.css') ?>" rel="stylesheet">
+  <link href="../assets/css/jenis_sevis.css?v=<?= filemtime(__DIR__ . '/../assets/css/jenis_sevis.css') ?>" rel="stylesheet">
 </head>
 <body>
   <a class="skip-link" href="#konten">Lewati ke konten</a>
 
-  <header class="topbar sticky-top">
-    <div class="d-flex align-items-center gap-3 h-100 px-3">
-      <button class="btn btn-outline-secondary d-lg-none" type="button" data-ui-toggle="sidebar" data-ui-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Buka menu">
-        <span aria-hidden="true">&#9776;</span>
-      </button>
-      <a class="d-flex align-items-center gap-2 text-decoration-none text-body fw-semibold" href="dashboard.php">
-        <span class="brand-logo" aria-hidden="true">S</span>
-        <span class="d-none d-sm-inline">Servis Kendaraan Pribadi</span>
-      </a>
-      <form class="global-search flex-grow-1 d-none d-md-block mx-lg-4" role="search">
-        <label for="cariGlobal" class="visually-hidden">Cari</label>
-        <input id="cariGlobal" type="search" class="form-control" placeholder="Cari kendaraan, bengkel, jenis servis...">
-      </form>
-      <div class="dropdown ms-auto">
-        <button class="btn btn-light d-flex align-items-center gap-2" type="button" data-ui-toggle="dropdown" aria-expanded="false">
-          <span class="avatar-dot rounded-circle bg-secondary-subtle" aria-hidden="true"></span>
-          <span class="d-none d-sm-inline"><?= htmlspecialchars($penggunaAktif['nama'], ENT_QUOTES, 'UTF-8') ?></span>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-end">
-          <li><a class="dropdown-item" href="../logout.php">Logout</a></li>
-        </ul>
-      </div>
-    </div>
-  </header>
+  <?php require __DIR__ . '/topbar.php'; ?>
 
   <div class="page-layout d-lg-flex">
-    <aside id="sidebar" class="sidebar offcanvas-lg offcanvas-start" tabindex="-1" aria-label="Menu utama">
-      <div class="offcanvas-header d-lg-none">
-        <span class="fw-semibold">Menu</span>
-        <button type="button" class="btn-close btn-close-white" data-ui-dismiss="sidebar" aria-label="Tutup"></button>
-      </div>
-      <nav class="offcanvas-body d-block p-2">
-        <ul class="nav flex-column">
-          <li><a class="nav-link" href="dashboard.php">Dashboard</a></li>
-          <li class="nav-heading">Data Master</li>
-          <li><a class="nav-link sub" href="kendaraan.php">Kendaraan</a></li>
-          <li><a class="nav-link sub active" href="jenis_sevis.php" aria-current="page">Jenis Servis</a></li>
-          <li class="nav-heading">Transaksi</li>
-          <li><a class="nav-link sub" href="servis.php">Riwayat Servis</a></li>
-          <li class="nav-heading">Laporan</li>
-          <li><a class="nav-link sub" href="rekap.php">Rekap Biaya</a></li>
-          <li class="mt-3"><a class="nav-link" href="../logout.php">Logout</a></li>
-        </ul>
-      </nav>
-    </aside>
+    <?php $menuAktif = 'jenis_sevis'; require __DIR__ . '/sidebar.php'; ?>
 
     <main id="konten" class="flex-grow-1 p-3 p-md-4">
       <div class="page-content">
@@ -77,30 +40,9 @@ $penggunaAktif = pengguna_login();
             <button class="btn btn-primary px-4" type="button" id="btnTambah">
               <span aria-hidden="true">+</span> Tambah Data
             </button>
-            <button class="btn btn-outline-secondary px-4" type="button" id="btnFilter" data-ui-toggle="collapse" data-ui-target="#panelFilter" aria-expanded="false" aria-controls="panelFilter">
-              Filter
-            </button>
             <div class="flex-grow-1 filter-search">
               <label for="cariJenis" class="visually-hidden">Cari nama atau keterangan jenis servis</label>
               <input type="search" class="form-control" id="cariJenis" placeholder="Cari jenis servis...">
-            </div>
-          </div>
-
-          <div class="collapse mb-3" id="panelFilter" hidden>
-            <div class="card card-body">
-              <div class="row g-3 align-items-end">
-                <div class="col-12 col-sm-6 col-lg-4">
-                  <label for="filterInterval" class="form-label fw-semibold">Interval servis</label>
-                  <select class="form-select" id="filterInterval">
-                    <option value="">Semua interval</option>
-                    <option value="km">Berdasarkan kilometer</option>
-                    <option value="waktu">Berdasarkan waktu</option>
-                  </select>
-                </div>
-                <div class="col-auto">
-                  <button class="btn btn-outline-secondary" type="button" id="btnResetFilter">Reset filter</button>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -139,7 +81,7 @@ $penggunaAktif = pengguna_login();
             <input type="hidden" id="jenisId">
             <div class="mb-3">
               <label for="namaJenis" class="form-label">Nama Jenis Servis</label>
-              <input type="text" class="form-control" id="namaJenis" maxlength="80" required>
+              <input type="text" class="form-control" id="namaJenis" placeholder="Contoh: Ganti Oli" maxlength="100" required>
             </div>
             <fieldset class="mb-3">
               <legend class="form-label">Interval Servis <span class="text-body-secondary small">(isi minimal salah satu)</span></legend>
@@ -147,14 +89,14 @@ $penggunaAktif = pengguna_login();
                 <div class="col-sm-6">
                   <label for="intervalKm" class="form-label">Kilometer</label>
                   <div class="input-group">
-                    <input type="number" class="form-control" id="intervalKm" min="1" step="1" inputmode="numeric">
+                    <input type="number" class="form-control" id="intervalKm" placeholder="Contoh: 5000" min="1" max="2147483647" step="1" inputmode="numeric">
                     <span class="input-group-text">km</span>
                   </div>
                 </div>
                 <div class="col-sm-6">
                   <label for="intervalBulan" class="form-label">Waktu</label>
                   <div class="input-group">
-                    <input type="number" class="form-control" id="intervalBulan" min="1" step="1" inputmode="numeric">
+                    <input type="number" class="form-control" id="intervalBulan" placeholder="Contoh: 6" min="1" max="2147483647" step="1" inputmode="numeric">
                     <span class="input-group-text">bulan</span>
                   </div>
                 </div>
@@ -163,7 +105,7 @@ $penggunaAktif = pengguna_login();
             </fieldset>
             <div>
               <label for="keterangan" class="form-label">Keterangan</label>
-              <textarea class="form-control" id="keterangan" rows="3" maxlength="200"></textarea>
+              <textarea class="form-control" id="keterangan" placeholder="Tambahkan keterangan (opsional)" rows="3" maxlength="150"></textarea>
             </div>
           </div>
           <div class="modal-footer">
@@ -221,6 +163,6 @@ $penggunaAktif = pengguna_login();
     </div>
   </div>
     <script src="../assets/js/common-ui.js"></script>
-  <script src="../assets/js/jenis_sevis.js"></script>
+  <script src="../assets/js/jenis_sevis.js?v=<?= filemtime(__DIR__ . '/../assets/js/jenis_sevis.js') ?>"></script>
 </body>
 </html>

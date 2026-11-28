@@ -20,16 +20,12 @@
       text-align: center;
     }
     .login-logo {
-      display: grid;
+      display: block;
       width: 56px;
       height: 56px;
       margin: 0 auto .75rem;
-      place-items: center;
       border-radius: .75rem;
-      background: var(--sv-primary);
-      color: #fff;
-      font-size: 1.5rem;
-      font-weight: 700;
+      object-fit: cover;
     }
     .login-heading { margin-top: 1.25rem; }
     .login-submit { min-height: 44px; }

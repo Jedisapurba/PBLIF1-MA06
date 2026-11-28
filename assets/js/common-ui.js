@@ -140,10 +140,6 @@
     document.querySelectorAll('.dropdown.is-open').forEach(item => item.classList.remove('is-open'));
   });
 
-  document.querySelectorAll('.global-search').forEach(form => {
-    form.addEventListener('submit', event => event.preventDefault());
-  });
-
   window.addEventListener('resize', () => {
     if (window.innerWidth >= 992) closeSidebar();
   });

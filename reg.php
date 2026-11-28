@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <main class="register-page">
     <section class="register-card" aria-labelledby="judulRegistrasi">
       <header class="register-brand">
-        <div class="register-logo" aria-hidden="true">S</div>
+        <img class="register-logo" src="assets/logo/ikon-servisku.png" alt="Logo Servisku">
         <p class="fw-bold mb-0">Aplikasi Pencatatan Servis<br>Kendaraan Pribadi</p>
       </header>
 

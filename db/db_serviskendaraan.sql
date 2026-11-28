@@ -30,6 +30,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `jenis_servis` (
   `id_jenis` int NOT NULL,
   `nama_servis` varchar(100) NOT NULL,
+  `interval_km` int UNSIGNED DEFAULT NULL,
+  `interval_bulan` int UNSIGNED DEFAULT NULL,
   `keterangan` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
